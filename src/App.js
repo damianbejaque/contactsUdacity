@@ -3,10 +3,10 @@ import ListContacts from './ListContacts'
 import PropTypes from 'prop-types'
 import * as ContactsAPI from './utils/ContactsAPI'
 import CreateContacts from './CreateContacts'
+import { Route } from 'react-router-dom'
 class App extends Component {
   state = {
     contacts : [],
-    screen: 'create'
   }
   componentDidMount(){
     ContactsAPI.getAll()
@@ -28,13 +28,11 @@ class App extends Component {
   render() {
     return (
       <div>
-       {this.state.screen === 'list' && 
-       (<ListContacts contacts={this.state.contacts} 
-       onDeleteContact={this.removeContact}/>)
-       }
-       {this.state.screen=== 'create' &&
-       (<CreateContacts />)
-       }
+        <Route exact path='/' render={() => (
+          <ListContacts contacts={this.state.contacts} 
+          onDeleteContact={this.removeContact}/>
+        )} />
+       <Route exact path='/create' component={CreateContacts} />
       </div>
     );
   }
